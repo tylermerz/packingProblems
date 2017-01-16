@@ -6,6 +6,7 @@ import { PackingAlg } from "./PackingAlg";
 import { NextFit } from "./1DOnline/NextFit";
 import { Report, TestSolution } from "./TestSolution";
 import {BestFit} from "./1DOnline/BestFit";
+import {HarmonicFit} from "./1DOnline/HarmonicFit";
 
 
 
@@ -13,7 +14,7 @@ import {BestFit} from "./1DOnline/BestFit";
 //we will use a normalized capacity of all bins to 1
 //all items will be of size <=1
 
-let numBins = 1000;
+let numBins = 10;
 
 //initialize bins
 let initBins = Array<Bin>(numBins);
@@ -53,4 +54,10 @@ console.log(testSol2.reportStatus().timeTaken);
 console.log(testSol2.reportStatus().packingEff);
 
 
-
+//Harmonic Fit
+let testAlg3 = new HarmonicFit(initBins,5);
+let testSol3 = new TestSolution(testAlg3,initItems);
+testSol3.placeAllItems();
+console.log(testSol3.reportStatus());
+console.log(testSol3.reportStatus().timeTaken);
+console.log(testSol3.reportStatus().packingEff);

@@ -6,6 +6,7 @@ export interface Report {
     itemsNotPlaced: Array<Item>;
     timeTaken?: number;
     packingEff: number;
+    binsUsed:number;
 }
 
 export class TestSolution {
@@ -56,7 +57,8 @@ export class TestSolution {
             bins: this.packingSol.bins,
             itemsNotPlaced: this.workingItems,
             timeTaken: this.packingSol.timeTaken,
-            packingEff: totalUsedCap / totalCap
+            packingEff: totalUsedCap / totalCap,
+            binsUsed: binsWhichHaveItems.length
         };
         //ask about the bins from the Alg
         return rep;
