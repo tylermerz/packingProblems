@@ -40,12 +40,17 @@ let testSol = new TestSolution(testAlg, initItems);
 
 testSol.placeAllItems();
 console.log(testSol.reportStatus().timeTaken);
+console.log(testSol.reportStatus().packingEff);
+
 
 
 //Best fit alg testing
 let testAlg2 = new BestFit(initBins);
 let testSol2 = new TestSolution(testAlg2,initItems);
 testSol2.placeAllItems();
+console.log(testSol2.reportStatus());
 console.log(testSol2.reportStatus().timeTaken);
+console.log(testSol2.reportStatus().packingEff);
+
 
 

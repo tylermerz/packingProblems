@@ -26,7 +26,11 @@ export class Bin {
     }
     //returns the remaining size if the item fits and -1 if it doesn't
     testFit(item: Item): number {
-        return Math.max(this.capacityRemaining - item.size, -1);
+        if (this.capacityRemaining - item.size > 0){
+            return this.capacityRemaining - item.size;
+        } else {
+            return -1;
+        }
     }
 
     add(item: Item) {
