@@ -11,7 +11,7 @@ export class BestFit extends PackingAlg {
         this.timerStart();
 
         let binID = 0;
-        let bestBinRemainder = this.bins[0].capacity;
+        let bestBinRemainder = this.bins[0].capacity;//FIX ME: very klugey 
         this.bins.forEach((currentBin,currentBinID)=>{
             let currentBinRemainder = currentBin.testFit(item);
             if ((currentBinRemainder < bestBinRemainder) && (currentBinRemainder >=0)){
