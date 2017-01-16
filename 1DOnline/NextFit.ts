@@ -9,6 +9,7 @@ export class NextFit extends PackingAlg {
         this.openBin = 0;
     }
     placeItem(item: Item):number{
+        this.timerStart();
         let binID = -1;
         if (this.bins[this.openBin].testFit(item)>=0){
             this.bins[this.openBin].add(item);
@@ -19,6 +20,8 @@ export class NextFit extends PackingAlg {
         } else {
             throw new Error("There is not enough capacity to hold all items.");
         }
+
+        this.timerStop()
         return binID;
     }
 }

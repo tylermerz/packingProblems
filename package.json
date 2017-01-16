@@ -25,6 +25,7 @@
   "homepage": "https://github.com/tylermerz/packingProblems#readme",
   "dependencies": {
     "es6-promise": "^4.0.5",
+    "performance-now": "^2.0.0",
     "typings": "^2.1.0"
   }
 }

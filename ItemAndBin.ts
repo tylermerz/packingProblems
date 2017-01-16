@@ -20,7 +20,10 @@ export class Bin {
         this.storedItems = [];
         this.numberItemsStored = 0;
     }
+    clone():Bin{
+        return new Bin(this.capacity);
 
+    }
     //returns the remaining size if the item fits and -1 if it doesn't
     testFit(item: Item): number {
         return Math.max(this.capacityRemaining - item.size, -1);
