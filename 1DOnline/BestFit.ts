@@ -1,6 +1,8 @@
 import {Item, Bin} from "../ItemAndBin";
 import {PackingAlg} from "../PackingAlg";
 
+
+//this will be the most naive implementation of this alg
 export class BestFit extends PackingAlg {
 
     maximumCapacity:number;
@@ -17,16 +19,12 @@ export class BestFit extends PackingAlg {
         this.timerStart();
 
         let binID = -1;
-        let minPossbleRemainder = this.maximumCapacity - item.size;
 
-        let remainders = Array<number>(this.bins.length);
-        for (var i =0; i < remainders.length; i++){
-            remainders[i] = this.bins[i].testFit(item);
-            if (remainders[i]==minPossbleRemainder){
-                break;
-            }
-        }
- 
+        let remainders = this.bins.map((currBin)=>{
+            return currBin.testFit(item);
+        });
+
+        
         let minRemainder;
         for (var i =0; i < remainders.length; i++){
             let currRemainder = remainders[i];
@@ -37,9 +35,6 @@ export class BestFit extends PackingAlg {
                 } else if (currRemainder < minRemainder){
                     minRemainder = currRemainder;
                     binID = i;
-                }
-                if (currRemainder == minPossbleRemainder){ 
-                    break;
                 }
             }
         };
