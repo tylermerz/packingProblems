@@ -29,7 +29,6 @@ for (var i = 0; i < initItems.length; i++) {
     initItems[i] = new Item(Math.random()/scale,"item" + i.toString());
 };
 
-
 //call the solution
 
 
@@ -38,8 +37,7 @@ let testAlg = new NextFit(initBins);
 let testSol = new TestSolution(testAlg, initItems);
 
 testSol.placeAllItems();
-console.log(testSol.reportStatus().timeTaken);
-console.log(testSol.reportStatus().packingEff);
+
 
 
 
@@ -47,15 +45,18 @@ console.log(testSol.reportStatus().packingEff);
 let testAlg2 = new BestFit(initBins);
 let testSol2 = new TestSolution(testAlg2,initItems);
 testSol2.placeAllItems();
-console.log(testSol2.reportStatus());
-console.log(testSol2.reportStatus().timeTaken);
-console.log(testSol2.reportStatus().packingEff);
+
 
 
 //Harmonic Fit
 let testAlg3 = new HarmonicFit(initBins,5);
 let testSol3 = new TestSolution(testAlg3,initItems);
 testSol3.placeAllItems();
-console.log(testSol3.reportStatus());
-console.log(testSol3.reportStatus().timeTaken);
-console.log(testSol3.reportStatus().packingEff);
+
+module.exports= { drawBins: function (ctx : CanvasRenderingContext2D){
+        ctx.scale(300,-150);
+        ctx.lineWidth = 2 / 300.;
+        ctx.translate(0,-1);
+        testSol2.draw(ctx,10);
+    }
+}

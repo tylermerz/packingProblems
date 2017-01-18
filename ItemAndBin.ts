@@ -1,8 +1,20 @@
-export interface Item {
+export class Item {
     size:
     number;
     name:
     string;
+    constructor(size:number,name:string){
+        this.size = size;
+        this.name = name;
+    }
+    clone():Item{
+        return new Item(this.size,this.name);
+    }
+    draw(ctx:CanvasRenderingContext2D,xOffset,yOffset:number,width:number,style?:Object){
+        ctx.fillStyle = "#ABC";//set the color
+        ctx.fillRect(xOffset,yOffset,width,this.size);
+        ctx.strokeRect(xOffset,yOffset,width,this.size);
+    }
 }
 
 export class Bin {
@@ -48,6 +60,19 @@ export class Bin {
             this.storedItems.splice(itemIndex, 1);
             this.capacityRemaining += item.size;
         }
+    }
+
+    draw(ctx: CanvasRenderingContext2D,xOffset:number,yOffset:number,width:number,style?:Object){
+        //Todo
+        console.log(width);
+        ctx.strokeRect(xOffset,yOffset,width,1);
+
+        let capacityOfItemsSoFar = 0;
+        this.storedItems.forEach((item,index)=>{
+            console.log(capacityOfItemsSoFar)
+            item.draw(ctx,xOffset,yOffset + capacityOfItemsSoFar,width);
+            capacityOfItemsSoFar += item.size;
+        });
     }
 }
 

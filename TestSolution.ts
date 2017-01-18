@@ -6,7 +6,7 @@ export interface Report {
     itemsNotPlaced: Array<Item>;
     timeTaken?: number;
     packingEff: number;
-    binsUsed:number;
+    binsUsed: number;
 }
 
 export class TestSolution {
@@ -15,7 +15,10 @@ export class TestSolution {
     workingItems: Array<Item>;
 
     constructor(packingSol: PackingAlg, initalItems: Array<Item>) {
-        this.initialItems = JSON.parse(JSON.stringify(initalItems));
+        this.initialItems = Array<Item>(initalItems.length);
+        initalItems.forEach((currItem,index)=>{
+            this.initialItems[index] = currItem.clone();
+        });
         this.workingItems = this.initialItems;
         this.packingSol = packingSol;
     }
@@ -63,6 +66,27 @@ export class TestSolution {
         //ask about the bins from the Alg
         return rep;
 
+    }
+    draw(ctx: CanvasRenderingContext2D, binsToPlot?: number) {
+        //layout the canvas
+        let status = this.reportStatus();
+        let totalBinWidth;
+        if (binsToPlot === undefined) {
+            totalBinWidth = 1./status.binsUsed;
+            status.bins.forEach((currBin, index) => {
+                if (currBin.numberItemsStored > 0) {
+                    currBin.draw(ctx, index * totalBinWidth, 0, totalBinWidth);
+                }
+            });
+        } else {
+            totalBinWidth = 1./binsToPlot;
+            console.log(totalBinWidth);
+            status.bins.forEach((currBin, index) => {
+                if (index < binsToPlot) {
+                    currBin.draw(ctx, index * totalBinWidth, 0, totalBinWidth);
+                }
+            });
+        }
     }
 
 }
