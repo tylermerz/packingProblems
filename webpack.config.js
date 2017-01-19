@@ -2,7 +2,7 @@ module.exports = {
   entry: "./testVisResult.ts",
   output: {
     filename: 'visTestBundle.js',
-    path: './1DOnline/',
+    path: './',
     libraryTarget: 'var',
     library: 'EntryPoint'
   },

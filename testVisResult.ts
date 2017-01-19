@@ -54,9 +54,11 @@ let testSol3 = new TestSolution(testAlg3,initItems);
 testSol3.placeAllItems();
 
 module.exports= { drawBins: function (ctx : CanvasRenderingContext2D){
-        ctx.scale(300,-150);
-        ctx.lineWidth = 2 / 300.;
+        ctx.save();
+        ctx.scale(600,-300);
+        ctx.lineWidth = 2 / 600.;
         ctx.translate(0,-1);
         testSol2.draw(ctx,10);
+        ctx.restore();
     }
 }

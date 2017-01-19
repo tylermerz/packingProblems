@@ -10,10 +10,10 @@ export class Item {
     clone():Item{
         return new Item(this.size,this.name);
     }
-    draw(ctx:CanvasRenderingContext2D,xOffset,yOffset:number,width:number,style?:Object){
+    draw(ctx:CanvasRenderingContext2D,width:number,style?:Object){
         ctx.fillStyle = "#ABC";//set the color
-        ctx.fillRect(xOffset,yOffset,width,this.size);
-        ctx.strokeRect(xOffset,yOffset,width,this.size);
+        ctx.fillRect(0,0,width,this.size);
+        ctx.strokeRect(0,0,width,this.size);
     }
 }
 
@@ -62,17 +62,15 @@ export class Bin {
         }
     }
 
-    draw(ctx: CanvasRenderingContext2D,xOffset:number,yOffset:number,width:number,style?:Object){
+    draw(ctx: CanvasRenderingContext2D,width:number,style?:Object){
         //Todo
-        console.log(width);
-        ctx.strokeRect(xOffset,yOffset,width,1);
-
-        let capacityOfItemsSoFar = 0;
+        ctx.strokeRect(0,0,width,1);
+        ctx.save();//push the current translation onto the stack
         this.storedItems.forEach((item,index)=>{
-            console.log(capacityOfItemsSoFar)
-            item.draw(ctx,xOffset,yOffset + capacityOfItemsSoFar,width);
-            capacityOfItemsSoFar += item.size;
+            item.draw(ctx,width);
+            ctx.translate(0,item.size);
         });
+        ctx.restore();//restore the y translation
     }
 }
 

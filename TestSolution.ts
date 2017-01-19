@@ -71,22 +71,25 @@ export class TestSolution {
         //layout the canvas
         let status = this.reportStatus();
         let totalBinWidth;
+        ctx.save();//push the context to the stack to save any translations
         if (binsToPlot === undefined) {
             totalBinWidth = 1./status.binsUsed;
             status.bins.forEach((currBin, index) => {
                 if (currBin.numberItemsStored > 0) {
-                    currBin.draw(ctx, index * totalBinWidth, 0, totalBinWidth);
+                    currBin.draw(ctx, totalBinWidth);
+                    ctx.translate(totalBinWidth,0);
                 }
             });
         } else {
             totalBinWidth = 1./binsToPlot;
-            console.log(totalBinWidth);
             status.bins.forEach((currBin, index) => {
                 if (index < binsToPlot) {
-                    currBin.draw(ctx, index * totalBinWidth, 0, totalBinWidth);
+                    currBin.draw(ctx, totalBinWidth);
+                    ctx.translate(totalBinWidth,0);
                 }
             });
         }
+        ctx.restore();
     }
 
 }
