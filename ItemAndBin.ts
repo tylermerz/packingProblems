@@ -1,3 +1,6 @@
+/**
+ * Obejcts that will be packed by the packing algorithms
+*/
 export class Item {
     size:
     number;
@@ -17,6 +20,9 @@ export class Item {
     }
 }
 
+/**
+ * Class where Items can be stored
+*/
 export class Bin {
     numberItemsStored: number;
     capacity:
@@ -32,11 +38,13 @@ export class Bin {
         this.storedItems = [];
         this.numberItemsStored = 0;
     }
+    /** Returns a copy of the bin. No contents are copied. */
     clone():Bin{
         return new Bin(this.capacity);
 
     }
-    //returns the remaining size if the item fits and -1 if it doesn't
+
+    /** returns the remaining size if the item fits and -1 if it doesn't */
     testFit(item: Item): number {
         if (this.capacityRemaining - item.size > 0){
             return this.capacityRemaining - item.size;

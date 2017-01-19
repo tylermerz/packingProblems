@@ -1,5 +1,9 @@
 import {Item, Bin} from "./ItemAndBin";
 
+/**
+ * Generalized class from which all packing algs. are derived.
+ * Has naive timing functions to compute basic performance stats.
+*/
 export class PackingAlg{
     bins : Array<Bin>;
     timeTaken:number;

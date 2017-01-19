@@ -1,6 +1,11 @@
 import {Item, Bin} from "../ItemAndBin";
 import {PackingAlg} from "../PackingAlg";
 
+/**
+ * Most naive packing alg.
+ * Packs items into the only open bin. If the item doesn't fit,
+ * close that bin and open a new one.
+*/
 export class NextFit extends PackingAlg {
     openBin:number;
 

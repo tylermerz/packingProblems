@@ -14,7 +14,7 @@ import {HarmonicFit} from "./1DOnline/HarmonicFit";
 //we will use a normalized capacity of all bins to 1
 //all items will be of size <=1
 
-let numBins = 10;
+let numBins = 100;
 
 //initialize bins
 let initBins = Array<Bin>(numBins);
@@ -22,11 +22,10 @@ for (var i = 0; i < initBins.length; i++) {
     initBins[i] = new Bin(1);
 }
 
-let scale = 1.;
 //initialize items
-let initItems = Array<Item>(scale*numBins);
+let initItems = Array<Item>(15);
 for (var i = 0; i < initItems.length; i++) {
-    initItems[i] = new Item(Math.random()/scale,"item" + i.toString());
+    initItems[i] = new Item(Math.random(),"item" + i.toString());
 };
 
 //call the solution
@@ -49,7 +48,7 @@ testSol2.placeAllItems();
 
 
 //Harmonic Fit
-let testAlg3 = new HarmonicFit(initBins,5);
+let testAlg3 = new HarmonicFit(initBins,10);
 let testSol3 = new TestSolution(testAlg3,initItems);
 testSol3.placeAllItems();
 
@@ -58,7 +57,7 @@ module.exports= { drawBins: function (ctx : CanvasRenderingContext2D){
         ctx.scale(600,-300);
         ctx.lineWidth = 2 / 600.;
         ctx.translate(0,-1);
-        testSol2.draw(ctx,10);
+        testSol3.draw(ctx,15);
         ctx.restore();
     }
 }

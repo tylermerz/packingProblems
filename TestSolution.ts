@@ -1,6 +1,7 @@
 import { Item, Bin } from "./ItemAndBin";
 import { PackingAlg } from "./PackingAlg";
 
+/** Object interface that summarizes the solution's progress*/
 export interface Report {
     bins: Array<Bin>;
     itemsNotPlaced: Array<Item>;
@@ -9,6 +10,10 @@ export interface Report {
     binsUsed: number;
 }
 
+
+/**
+ * General wrapper for packing alg. and items to be placed.
+*/
 export class TestSolution {
     initialItems: Array<Item>;
     packingSol: PackingAlg;
@@ -23,8 +28,9 @@ export class TestSolution {
         this.packingSol = packingSol;
     }
 
-    //place the next piece in the workingItems list and return the number of the bin that it was put in
-    //return -1 if this can't be placed
+    /** place the next piece in the workingItems list and return the number of the bin that it was put in
+     * return -1 if this can't be placed
+     */ 
     placeNextItem(): number {
         if (this.workingItems.length > 0) {
             return this.packingSol.placeItem(this.workingItems.pop());
@@ -39,8 +45,8 @@ export class TestSolution {
         }
     }
 
+    /**Returns a Report object for the current solution at the current iteration.*/
     reportStatus(): Report {
-
         let binsWhichHaveItems = this.packingSol.bins.filter((bin) => {
             if (bin.numberItemsStored > 0) {
                 return true;
@@ -67,6 +73,8 @@ export class TestSolution {
         return rep;
 
     }
+
+    /** Draws each of the requested bins onto the provided HTML5 canvas. */
     draw(ctx: CanvasRenderingContext2D, binsToPlot?: number) {
         //layout the canvas
         let status = this.reportStatus();
