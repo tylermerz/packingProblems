@@ -6,14 +6,14 @@ export class Item {
     number;
     name:
     string;
-    constructor(size:number,name:string){
+    constructor(size:number,name:string) {
         this.size = size;
         this.name = name;
     }
-    clone():Item{
+    clone():Item {
         return new Item(this.size,this.name);
     }
-    draw(ctx:CanvasRenderingContext2D,width:number,style?:Object){
+    draw(ctx:CanvasRenderingContext2D,width:number,style?:Object) {
         ctx.fillStyle = "#ABC";//set the color
         ctx.fillRect(0,0,width,this.size);
         ctx.strokeRect(0,0,width,this.size);
@@ -39,14 +39,14 @@ export class Bin {
         this.numberItemsStored = 0;
     }
     /** Returns a copy of the bin. No contents are copied. */
-    clone():Bin{
+    clone():Bin {
         return new Bin(this.capacity);
 
     }
 
     /** returns the remaining size if the item fits and -1 if it doesn't */
     testFit(item: Item): number {
-        if (this.capacityRemaining - item.size > 0){
+        if (this.capacityRemaining - item.size > 0) {
             return this.capacityRemaining - item.size;
         } else {
             return -1;
@@ -70,11 +70,19 @@ export class Bin {
         }
     }
 
-    draw(ctx: CanvasRenderingContext2D,width:number,style?:Object){
+    pop():Item {
+        let itemToReturn = this.storedItems.pop();
+        this.numberItemsStored--;
+        this.capacityRemaining += itemToReturn.size;
+
+        return itemToReturn;
+    }
+
+    draw(ctx: CanvasRenderingContext2D,width:number,style?:Object) {
         //Todo
         ctx.strokeRect(0,0,width,1);
         ctx.save();//push the current translation onto the stack
-        this.storedItems.forEach((item,index)=>{
+        this.storedItems.forEach((item,index)=> {
             item.draw(ctx,width);
             ctx.translate(0,item.size);
         });

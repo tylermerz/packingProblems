@@ -52,12 +52,12 @@ let testAlg3 = new HarmonicFit(initBins,10);
 let testSol3 = new TestSolution(testAlg3,initItems);
 testSol3.placeAllItems();
 
-module.exports= { drawBins: function (ctx : CanvasRenderingContext2D){
-        ctx.save();
-        ctx.scale(600,-300);
-        ctx.lineWidth = 2 / 600.;
-        ctx.translate(0,-1);
-        testSol3.draw(ctx,15);
-        ctx.restore();
-    }
+module.exports= { drawBins: function (ctx : CanvasRenderingContext2D) {
+    ctx.save();
+    ctx.scale(600,-300);
+    ctx.lineWidth = 2 / 600.;
+    ctx.translate(0,-1);
+    testSol3.draw(ctx,15);
+    ctx.restore();
 }
+                }

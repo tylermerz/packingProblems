@@ -3,10 +3,9 @@ Class to test the different packing solutions.
 */
 import { Item, Bin } from "./ItemAndBin";
 import { PackingAlg } from "./PackingAlg";
-import { NextFit } from "./1DOnline/NextFit";
+import { REP3 } from "./1DOnlineWithRepack/REP3";
 import { Report, TestSolution } from "./TestSolution";
-import {BestFit} from "./1DOnline/BestFit";
-import {HarmonicFit} from "./1DOnline/HarmonicFit";
+
 
 
 
@@ -34,28 +33,12 @@ for (var i = 0; i < initItems.length; i++) {
 
 
 //next fit alg.
-let testAlg = new NextFit(initBins);
+let testAlg = new REP3(initBins);
 let testSol = new TestSolution(testAlg, initItems);
 
 testSol.placeAllItems();
+console.log(testSol.reportStatus());
+
 console.log(testSol.reportStatus().timeTaken);
 console.log(testSol.reportStatus().packingEff);
 
-
-
-//Best fit alg testing
-let testAlg2 = new BestFit(initBins);
-let testSol2 = new TestSolution(testAlg2,initItems);
-testSol2.placeAllItems();
-console.log(testSol2.reportStatus());
-console.log(testSol2.reportStatus().timeTaken);
-console.log(testSol2.reportStatus().packingEff);
-
-
-//Harmonic Fit
-let testAlg3 = new HarmonicFit(initBins,5);
-let testSol3 = new TestSolution(testAlg3,initItems);
-testSol3.placeAllItems();
-console.log(testSol3.reportStatus());
-console.log(testSol3.reportStatus().timeTaken);
-console.log(testSol3.reportStatus().packingEff);

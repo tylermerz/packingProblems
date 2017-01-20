@@ -21,7 +21,7 @@ export class TestSolution {
 
     constructor(packingSol: PackingAlg, initalItems: Array<Item>) {
         this.initialItems = Array<Item>(initalItems.length);
-        initalItems.forEach((currItem,index)=>{
+        initalItems.forEach((currItem,index)=> {
             this.initialItems[index] = currItem.clone();
         });
         this.workingItems = this.initialItems;
@@ -30,7 +30,7 @@ export class TestSolution {
 
     /** place the next piece in the workingItems list and return the number of the bin that it was put in
      * return -1 if this can't be placed
-     */ 
+     */
     placeNextItem(): number {
         if (this.workingItems.length > 0) {
             return this.packingSol.placeItem(this.workingItems.pop());
