@@ -9,14 +9,14 @@ import {PackingAlg} from "../PackingAlg";
 export class NextFit extends PackingAlg {
     openBin:number;
 
-    constructor(bins: Array<Bin>){
+    constructor(bins: Array<Bin>) {
         super(bins);
         this.openBin = 0;
     }
-    placeItem(item: Item):number{
+    placeItem(item: Item):number {
         this.timerStart();
         let binID = -1;
-        if (this.bins[this.openBin].testFit(item)>=0){
+        if (this.bins[this.openBin].testFit(item)>=0) {
             this.bins[this.openBin].add(item);
             binID = this.openBin;
         } else if(this.openBin < this.bins.length - 1) {
