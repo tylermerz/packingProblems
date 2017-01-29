@@ -56,6 +56,7 @@ export class REP3 extends PackingAlg {
     initOpenBins() {
         this.openBins = Array<Bin>(3);
         this.openBinsOriginalPosition = Array<number>(3);
+
         for (var i = 0; i < this.openBins.length; i++) {
             this.openBins[i] = this.bins[i];
             this.openBinsOriginalPosition[i] = i;
@@ -65,6 +66,7 @@ export class REP3 extends PackingAlg {
     /**weighting function described in Galambos and Woeginger */
     weightingFunction(item: Item): number {
         let weightBin = Math.floor(1. / item.size);
+
         if (weightBin > 7) {//correct for very small items
             weightBin = 7;
         }
@@ -96,12 +98,15 @@ export class REP3 extends PackingAlg {
         //place them into the first bin which they fit
         //no need to worry about the items not fitting because we are guaranteed they will by design
         let workingBin = 0;
+
         while (tempBinArray.length > 0) {
             let itemToBePlaced = tempBinArray.pop();
+
             if (this.openBins[workingBin].testFit(itemToBePlaced) === -1) {
                 //close this bin and move on
                 workingBin++;
             }
+
             this.openBins[workingBin].add(itemToBePlaced);
         }
     }
@@ -116,11 +121,13 @@ export class REP3 extends PackingAlg {
      */
     repackOpenBins() {
         this.FFDOpenBins();
+
         //after the FFD sort, if there is an empty bin, it will be bin 3
         if (this.openBins[2].numberItemsStored !== 0) {
             //determine weight of each bin
             this.openBins.forEach((currBin, index) => {
                 let weight = this.weighBin(currBin);
+
                 if (weight >= 1) {
                     //replace with new bin
                     this.openBins[index] = this.bins[this.firstUnopenedBin];

@@ -23,6 +23,7 @@ export class HarmonicFit extends PackingAlg {
     initOpenBins() {
         this.openBins = Array<Bin>(this.numBins);
         this.openBinsOriginalPosition = Array<number>(this.numBins);
+
         for (var i = 0; i < this.openBins.length; i++) {
             this.openBins[i] = this.bins[i];
             this.openBinsOriginalPosition[i] = i;
@@ -34,6 +35,7 @@ export class HarmonicFit extends PackingAlg {
     */
     binIndex(item:Item):number {
         let inverseSize = 1./item.size;
+
         if (inverseSize >= this.numBins) {
             return this.numBins-1;
         } else {
@@ -46,16 +48,19 @@ export class HarmonicFit extends PackingAlg {
         let binID = -1;
         this.timerStart();
         let binIndex = this.binIndex(item);
+
         if (this.openBins[binIndex].testFit(item) === -1) {
             //see if the bins are out of space
             if (this.firstUnopenedBin === this.bins.length) {
                 throw new Error("There are no more bins to open.");
             }
+
             //close this bin and open a new one
             this.openBins[binIndex] = this.bins[this.firstUnopenedBin];
             this.openBinsOriginalPosition[binIndex] = this.firstUnopenedBin;
             this.firstUnopenedBin++;
         }
+
         this.openBins[binIndex].add(item);
         binID = this.openBinsOriginalPosition[binIndex];//look up where we had this bin itiially
 

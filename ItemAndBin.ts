@@ -62,6 +62,7 @@ export class Bin {
     remove(item: Item) {
         //find out of the item exists
         let itemIndex = this.storedItems.findIndex((testItem: Item) => item === testItem);
+
         if (itemIndex === -1) {
             throw new Error("Item could not be removed because it does not exist.");
         } else {

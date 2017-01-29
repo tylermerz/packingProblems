@@ -13,12 +13,11 @@ export class PackingAlgOffline extends PackingAlg {
     constructor(bins: Array<Bin>) {
         super(bins);
     }
-    loadItems(items:Array<Item>){
+    loadItems(items:Array<Item>) {
         this.items = items;
-        
     }
-    placeAllItems(){
-
+    placeAllItems() {
+        0==0;
     }
 }
 

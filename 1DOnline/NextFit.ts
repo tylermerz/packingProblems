@@ -16,6 +16,7 @@ export class NextFit extends PackingAlg {
     placeItem(item: Item):number {
         this.timerStart();
         let binID = -1;
+
         if (this.bins[this.openBin].testFit(item)>=0) {
             this.bins[this.openBin].add(item);
             binID = this.openBin;

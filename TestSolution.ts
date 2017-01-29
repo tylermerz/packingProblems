@@ -80,6 +80,7 @@ export class TestSolution {
         let status = this.reportStatus();
         let totalBinWidth;
         ctx.save();//push the context to the stack to save any translations
+
         if (binsToPlot === undefined) {
             totalBinWidth = 1./status.binsUsed;
             status.bins.forEach((currBin, index) => {
@@ -97,6 +98,7 @@ export class TestSolution {
                 }
             });
         }
+
         ctx.restore();
     }
 
