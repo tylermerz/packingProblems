@@ -20,11 +20,11 @@ export class RectangleBin extends Rectangle{
     allowedPlacement(rectToPlace:Rectangle,xPos:number,yPos:number):boolean{
         
         //make sure that the rectangle stays inside the containment
-        if (xPos>this.width || xPos < 0 || xPos+rectToPlace.width){
+        if (xPos>this.width || xPos < 0 || xPos+rectToPlace.width>this.width){
             throw new Error("Rectangle to be placed does not fit inside container.");
         }
 
-        if (yPos>this.height || yPos < 0 || yPos+rectToPlace.height){
+        if (yPos>this.height || yPos < 0 || yPos+rectToPlace.height>this.height){
             throw new Error("Rectangle to be placed does not fit inside container.");
         }
 

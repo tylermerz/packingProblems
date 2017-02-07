@@ -83,5 +83,70 @@ export class pTree{
     empty():boolean{
         return this.rootNode.isLeaf();
     }
+    printHelper(currNode:node,textArray:Array<string>,level:number,leftOffset:number):number{
+        let tALen = textArray.length;
+
+
+        if (currNode !== null){
+            //follow left
+            leftOffset += this.printHelper(currNode.left,textArray,level+1,leftOffset);
+
+            //follow right
+            let rightOffset = this.printHelper(currNode.right,textArray,level+1,1);
+            
+            textArray[level]+=' '.repeat(Math.floor((leftOffset+rightOffset))) +currNode.rect.toString();
+
+
+            console.log(Math.floor(currNode.rect.toString().length/2));
+            return leftOffset +Math.floor(currNode.rect.toString().length/2);
+        } else {
+            textArray[level]+=' '.repeat(leftOffset+12);
+            return leftOffset+12;
+        }
+        
+    }
+
+    print():void{
+        let textArray =Array<string>(10);
+        for (var i=0;i<textArray.length;i++){
+            textArray[i] = "";
+        }
+        //walk the tree and display each item
+        this.printHelper(this.rootNode,textArray,0,0);
+        textArray.forEach(str=>{
+            if (str.trim()!== ""){
+                console.log(str);
+            }
+        });
+    }
+    /**walk the tree from the root and decide if any of the extreme points
+     * have changed because of an update
+     */
+    updateExtrema():void{
+        this.extrema.top = this.rootNode.rect.height;
+        this.extrema.bottom = 0;
+        this.extrema.left = 0;
+        this.extrema.right= this.rootNode.rect.width;
+
+        //go down the right
+        this.updateExtremaHelper(this.rootNode.right);
+
+        //go down the left
+        this.updateExtremaHelper(this.rootNode.left);
+
+    }
+    updateExtremaHelper(node:node):void{
+        if (node !== null){
+            this.extrema.bottom = Math.min(this.extrema.bottom,node.rect.yPos);
+            this.extrema.top = Math.max(this.extrema.top,node.rect.yPos+node.rect.height);
+            this.extrema.left = Math.min(this.extrema.left,node.rect.xPos);
+            this.extrema.right = Math.max(this.extrema.right,node.rect.xPos+node.rect.width);
+            //go down the right
+            this.updateExtremaHelper(node.right);
+
+            //go down the left
+            this.updateExtremaHelper(node.left);
+        }
+    }
 
 }

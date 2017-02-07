@@ -18,4 +18,13 @@ export class Rectangle {
     clone():Rectangle{
         return new Rectangle(this.width,this.height,this.xPos,this.yPos);
     }
+
+    toString():string{
+        let str = "";
+        str+="x: "+this.xPos.toString()+", ";
+        str+="y: "+this.yPos.toString()+", ";
+        str+="w: "+this.width.toString()+", ";
+        str+="h: "+this.height.toString();
+        return str;
+    }
 }

@@ -18,6 +18,18 @@ describe('2D', function () {
                 alg.placeAllRects();
                 assert.equal(alg.currBestPTree.rootNode.rect,rectToPlace);
             });
+            it('Should update the extrema points to be the root rectangle', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace],3);
+                alg.placeAllRects();
+                assert.deepEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
+            });
+            it('Should update the extrema points to be the root rectangle', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace],0);
+                alg.placeAllRects();
+                assert.deepNotEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
+            });
         });
         
     });
