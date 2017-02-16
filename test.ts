@@ -24,9 +24,10 @@ describe('2D', function () {
                 alg.placeAllRects();
                 assert.deepEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
             });
-            it('Should update the extrema points to be the root rectangle', function () {
+            it('Should add one rectangle to the tree', function () {
                 let rectToPlace= new Rectangle(0.1,0.5);
-                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace],0);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2],0);
                 alg.placeAllRects();
                 assert.deepNotEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
             });
@@ -41,6 +42,7 @@ describe('2D', function () {
             });
             it('Should return false because it is not a leaf.', function () {
                 let pT = new pTree();
+                pT.rootNode = new node();
                 pT.rootNode.left = new node();
                 assert.equal(pT.rootNode.isLeaf(),false);
             });

@@ -21,7 +21,7 @@ export class node{
         this.rect = rect;
     }
     clone():node{
-        return new node(this.left,this.right,this.value);
+        return new node(this.left,this.right,this.value,this.rect.clone());
     }
     setLeft(n:node){
         this.left = n;        
@@ -57,7 +57,7 @@ export class pTree{
     rootNode:node;
     extrema:extremaPoints;
     constructor(){
-        this.rootNode = new node();
+        this.rootNode = null;
         this.extrema = {left:0,right:0,top:0,bottom:0};
     }
     clone():pTree{
@@ -81,7 +81,11 @@ export class pTree{
         return score;
     }
     empty():boolean{
-        return this.rootNode.isLeaf();
+        if (this.rootNode === null){
+            return true;
+        } else{
+            return this.rootNode.isLeaf();
+        }
     }
     printHelper(currNode:node,textArray:Array<string>,level:number,leftOffset:number):number{
         let tALen = textArray.length;
@@ -136,7 +140,7 @@ export class pTree{
 
     }
     updateExtremaHelper(node:node):void{
-        if (node !== null){
+        if (node !== null && node.isLeaf()){
             this.extrema.bottom = Math.min(this.extrema.bottom,node.rect.yPos);
             this.extrema.top = Math.max(this.extrema.top,node.rect.yPos+node.rect.height);
             this.extrema.left = Math.min(this.extrema.left,node.rect.xPos);

@@ -14,7 +14,8 @@ export class NLBT extends TwoDPackingAlg{
     }
 
     placeRect(rect:Rectangle){
-        if(this.currBestPTree.empty() === true){
+        if(this.currBestPTree.rootNode === null){
+            this.currBestPTree.rootNode = new node();
             this.currBestPTree.rootNode.rect = rect;
             this.currBestPTree.updateExtremaHelper(this.currBestPTree.rootNode);
         }else{
@@ -23,25 +24,35 @@ export class NLBT extends TwoDPackingAlg{
         }
     }
 
-    placeRectHelper(node:node,rect:Rectangle,recurLevel:number){
-        if (node !== null&& recurLevel <= this.recurDepth){
+    placeRectHelper(n:node,rect:Rectangle,recurLevel:number){
+        if (n !== null&& recurLevel <= this.recurDepth){
             //call on left branch
-            this.placeRectHelper(node.left,rect,recurLevel+1);
+            //this.placeRectHelper(n.left,rect,recurLevel+1);
             //call on right branch
-            this.placeRectHelper(node.right,rect,recurLevel+1);
+            //this.placeRectHelper(n.right,rect,recurLevel+1);
 
             //do the replacement on this node
-            let currNode = node.clone();
+            let currNode = n.clone();
             //replace with v split
-            node.setValue(dirs.v);
-            node.setRect(null);
+            n.setValue(dirs.v);
+            n.setRect(null);
             //left leg
-            node.left = node;
+            n.left = new node(null, null, dirs.h, rect);
+            n.right  = currNode;
+            this.currBestPTree.updateExtremaHelper(n);
+            console.log(this.currBestPTree.extrema);
+            console.log(n)
+
+
+           /*     
+            //this.currBestPTree.print();
             //right leg
-            node.right = node;
-            
-            //replace with h split
-            node.setValue(dirs.h);
+            n.right= new node(null, null, dirs.h, rect);
+            n.left = currNode;
+            //this.currBestPTree.print();
+            console.log(n)
+
+            //replace with h split*/
         }
     }
 
