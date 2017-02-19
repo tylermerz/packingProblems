@@ -24,12 +24,45 @@ describe('2D', function () {
                 alg.placeAllRects();
                 assert.deepEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
             });
+it('Should update the extrema points to be consistent with the second rectange', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2],0);
+                alg.placeAllRects();
+                assert.deepEqual(alg.currBestPTree.extrema,{ left: 0, right: 0.1, top: 0.5, bottom: -0.1 });
+            });
             it('Should add one rectangle to the tree', function () {
                 let rectToPlace= new Rectangle(0.1,0.5);
                 let rectToPlace2= new Rectangle(0.1,0.1);
                 let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2],0);
                 alg.placeAllRects();
-                assert.deepNotEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
+                assert.notDeepEqual(alg.currBestPTree.extrema,{left:0,right:rectToPlace.width,top:rectToPlace.height,bottom:0});
+            });
+
+            it('Should clone a pTree with 2 entries.', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2],0);
+                alg.placeAllRects();
+                assert.deepEqual(alg.currBestPTree,alg.currBestPTree.clone());
+            });
+            it('Find the correct node in a copy.', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2],0);
+                alg.placeAllRects();
+                let clonedTree = alg.currBestPTree.clone();
+                let foundNode = clonedTree.findEquivalentNode(alg.currBestPTree.rootNode.left);
+                assert.deepEqual(alg.currBestPTree.rootNode.left,foundNode);
+            });
+            it('Find another correct node in a copy.', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2],0);
+                alg.placeAllRects();
+                let clonedTree = alg.currBestPTree.clone();
+                let foundNode = clonedTree.findEquivalentNode(alg.currBestPTree.rootNode.right);
+                assert.deepEqual(alg.currBestPTree.rootNode.right,foundNode);
             });
         });
         

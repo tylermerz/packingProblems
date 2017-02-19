@@ -4,9 +4,6 @@ export class Rectangle {
     xPos:number;
     yPos:number;
     constructor(width:number, height:number,xPos =0,yPos=0){
-        if (xPos <0 || yPos<0){
-            throw new Error("Positions must be positive.");
-        }
         if (width <= 0 || height <= 0){
             throw new Error("Height and width must be greater than or equal to 0.");
         }

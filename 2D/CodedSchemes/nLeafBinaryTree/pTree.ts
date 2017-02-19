@@ -21,7 +21,11 @@ export class node{
         this.rect = rect;
     }
     clone():node{
-        return new node(this.left,this.right,this.value,this.rect.clone());
+        if (this.rect === null){
+            return new node(this.left,this.right,this.value,null);
+        }else {
+            return new node(this.left,this.right,this.value,this.rect.clone());
+        }
     }
     setLeft(n:node){
         this.left = n;        
@@ -60,8 +64,31 @@ export class pTree{
         this.rootNode = null;
         this.extrema = {left:0,right:0,top:0,bottom:0};
     }
+    /** returns a deep copy of the tree */
     clone():pTree{
-        return new pTree();
+        let clonedTree = new pTree();
+        if (this.rootNode !== null){
+            clonedTree.rootNode = this.rootNode.clone();
+            this.cloneHelper(this.rootNode,clonedTree.rootNode);
+        }
+        //copy the remaining data
+        clonedTree.extrema = this.extrema;
+        return clonedTree;
+    }
+    /**helper function that copy's the current node to the cloned tree and then
+     * recurrsively walks the rest of the tree
+     */
+    cloneHelper(originalNode,copiedNode){
+        //left
+        if (originalNode.left !== null){
+            copiedNode.left = originalNode.left.clone();
+            this.cloneHelper(originalNode.left,copiedNode.left);
+        }
+        //right
+        if (originalNode.right !== null){
+            copiedNode.right = originalNode.right.clone();
+            this.cloneHelper(originalNode.right,copiedNode.right);
+        }
     }
     /**Calculates the size of the current tree.
      * This is used in determining best placements of rectangles.
@@ -140,17 +167,53 @@ export class pTree{
 
     }
     updateExtremaHelper(node:node):void{
-        if (node !== null && node.isLeaf()){
-            this.extrema.bottom = Math.min(this.extrema.bottom,node.rect.yPos);
-            this.extrema.top = Math.max(this.extrema.top,node.rect.yPos+node.rect.height);
-            this.extrema.left = Math.min(this.extrema.left,node.rect.xPos);
-            this.extrema.right = Math.max(this.extrema.right,node.rect.xPos+node.rect.width);
-            //go down the right
-            this.updateExtremaHelper(node.right);
+        if (node !== null){
+            if (node.isLeaf()){
+                this.extrema.bottom = Math.min(this.extrema.bottom,node.rect.yPos);
+                this.extrema.top = Math.max(this.extrema.top,node.rect.yPos+node.rect.height);
+                this.extrema.left = Math.min(this.extrema.left,node.rect.xPos);
+                this.extrema.right = Math.max(this.extrema.right,node.rect.xPos+node.rect.width);
+            } else {
+                //go down the right
+                this.updateExtremaHelper(node.right);
 
-            //go down the left
-            this.updateExtremaHelper(node.left);
+                //go down the left
+                this.updateExtremaHelper(node.left);
+            }
         }
     }
+    /**function to find the equivalent node in a copy of a tree.
+     * Search is base on finding a node with the same coordinates.
+     */
+    findEquivalentNode(nodeToFind:node):node{
+        let foundNode:node = null;
 
+        foundNode = this.findEquivalentNodeHelper(nodeToFind,this.rootNode);
+
+        return foundNode;
+    }
+
+    findEquivalentNodeHelper(nodeToFind:node,currentNode:node):node{
+        if (currentNode !== null){
+            if (currentNode.isLeaf()){
+                console.log(currentNode);
+                //check to see if this is the node we want
+                if (nodeToFind.rect.xPos === currentNode.rect.xPos && nodeToFind.rect.yPos === currentNode.rect.yPos){
+                    return currentNode;
+                }
+            }else {
+                //continue down left
+                let lReturn = this.findEquivalentNodeHelper(nodeToFind,currentNode.left);
+                if (lReturn !== null){
+                    return lReturn;
+                }
+                //then right
+                let rReturn = this.findEquivalentNodeHelper(nodeToFind,currentNode.right);
+                if (rReturn !== null){
+                    return rReturn;
+            }
+        }
+
+        return null;
+    }
 }
