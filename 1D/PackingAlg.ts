@@ -18,13 +18,13 @@ export class PackingAlg {
     }
     timerStart() {
         //this.TS = process.hrtime();
-        this.TS = Date.now()
+        this.TS = performance.now()
     }
 
     timerStop() {
         //let td=process.hrtime(this.TS);
         //this.timeTaken += td[0]*1e9+td[1];
-        this.timeTaken += Date.now()-this.TS; 
+        this.timeTaken += performance.now()-this.TS; 
     }
     placeItem(item: Item):number {
         return -1;

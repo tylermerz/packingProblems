@@ -1,3 +1,5 @@
+var palette = ["#FF0000","#00FF00","#0000FF"];
+
 /**
  * Obejcts that will be packed by the packing algorithms
 */
@@ -14,7 +16,7 @@ export class Item {
         return new Item(this.size,this.name);
     }
     draw(ctx:CanvasRenderingContext2D,width:number,style?:Object) {
-        ctx.fillStyle = "#ABC";//set the color
+        ctx.fillStyle = palette[Number(this.name)%3];//set the color
         ctx.fillRect(0,0,width,this.size);
         ctx.strokeRect(0,0,width,this.size);
     }

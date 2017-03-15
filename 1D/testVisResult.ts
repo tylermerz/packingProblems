@@ -6,6 +6,7 @@ import { PackingAlg } from "./PackingAlg";
 import { Report, TestSolution } from "./TestSolution";
 import {BestFit} from "./1DOnline/BestFit";
 import {HarmonicFit} from "./1DOnline/HarmonicFit";
+import {REP3} from "./1DOnlineWithRepack/REP3";
 
 
 export class OneDVisualizationBackend {
@@ -15,13 +16,14 @@ export class OneDVisualizationBackend {
     maxItemSize:number;
     testSol:TestSolution;
     ctx:CanvasRenderingContext2D;
-
-    constructor(numBins:number,numItems:number,minItemSize:number,maxItemSize:number,ctx:CanvasRenderingContext2D){
+    fit:String;
+    constructor(numBins:number,numItems:number,minItemSize:number,maxItemSize:number,fit:String,ctx:CanvasRenderingContext2D){
         this.numBins = numBins;
         this.numItems = numItems;
         this.minItemSize = minItemSize;
         this.maxItemSize = maxItemSize;
         this.ctx = ctx;
+        this.fit = fit;
     }
 
     pack(){
@@ -37,10 +39,16 @@ export class OneDVisualizationBackend {
         let initItems = Array<Item>(this.numItems);
 
         for (var i = 0; i < initItems.length; i++) {
-            initItems[i] = new Item(Math.random()* (this.maxItemSize - this.minItemSize) + this.minItemSize,"item" + i.toString());
+            initItems[i] = new Item(Math.random()* (this.maxItemSize - this.minItemSize) + this.minItemSize,i.toString());
         };
-        //let testAlg = new BestFit(initBins);
-        let testAlg = new HarmonicFit(initBins,3);
+        let testAlg;
+
+        if (this.fit === "Best"){
+            testAlg = new BestFit(initBins);
+        }else if(this.fit === "REP3"){
+            testAlg = new REP3(initBins);
+        }
+
 
         let testSol = new TestSolution(testAlg,initItems);
         try{
