@@ -6,10 +6,10 @@
     <script src="./visTestBundle.js"  type="text/javascript"></script>
     <script type="text/javascript">
     function draw() {
-      var canvas = document.getElementById("canvas");
+        var canvas = document.getElementById("canvas");
       if (canvas.getContext) {
         var ctx = canvas.getContext("2d");
-        EntryPoint.drawBins(ctx);
+        window.drawBins.drawBins(ctx);
       }
     }
     </script>

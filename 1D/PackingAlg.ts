@@ -7,7 +7,7 @@ import {Item, Bin} from "./ItemAndBin";
 export class PackingAlg {
     bins : Array<Bin>;
     timeTaken:number;
-    TS:Array<number>;
+    TS:number;
 
     constructor(bins: Array<Bin>) {
         this.bins = new Array<Bin>(bins.length);
@@ -17,12 +17,14 @@ export class PackingAlg {
         this.timeTaken = 0;
     }
     timerStart() {
-        this.TS = process.hrtime();
+        //this.TS = process.hrtime();
+        this.TS = Date.now()
     }
 
     timerStop() {
-        let td=process.hrtime(this.TS);
-        this.timeTaken += td[0]*1e9+td[1];
+        //let td=process.hrtime(this.TS);
+        //this.timeTaken += td[0]*1e9+td[1];
+        this.timeTaken += Date.now()-this.TS; 
     }
     placeItem(item: Item):number {
         return -1;
