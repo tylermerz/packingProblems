@@ -105,6 +105,7 @@ export class REP3 extends PackingAlg {
             if (this.openBins[workingBin].testFit(itemToBePlaced) === -1) {
                 //close this bin and move on
                 workingBin++;
+                
             }
 
             this.openBins[workingBin].add(itemToBePlaced);
@@ -132,6 +133,9 @@ export class REP3 extends PackingAlg {
                     //replace with new bin
                     this.openBins[index] = this.bins[this.firstUnopenedBin];
                     this.firstUnopenedBin++;
+                    if (this.firstUnopenedBin >= this.numBins){
+                        throw new Error("Trying to use more bins than available.");
+                    }
                 }
             });
         }
@@ -143,7 +147,6 @@ export class REP3 extends PackingAlg {
     placeItem(item: Item): number {
         let binID = -1;
         this.timerStart();
-
         //Doesn't matter where we initially put the nw item since we are going to reshuffle immediately
         this.openBins[2].add(item);
         binID = this.openBinsOriginalPosition[2];
