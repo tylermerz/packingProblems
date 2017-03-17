@@ -52,7 +52,7 @@ export class OneDPackGUI extends React.Component<any, any> {
                         <input type='number' onChange={(e => this.setState({ numberOfBinsToDisplay: Number(e.target.value) }))} name='numberOfBinsToDisplay' value={this.state["numberOfBinsToDisplay"]}/><br />
 
                         <label htmlFor='numberOfItemsToPack'>Number of Items: </label>
-                        <input type='number' name='numberOfItemsToPack' onChange={(e => this.setState({numberOfItemsToPack : Number(e.target.value) }))} value={this.state["numberOfItemsToPack"]} /><br />
+                        <input type='number' name='numberOfItemsToPack' onChange={(e => this.setState({numberOfItemsToPack : Number(e.target.value) }))} value={this.state["numberOfItemsToPack"]} max={this.state["numberOfBinsToDisplay"]}/><br />
                         
                         <label htmlFor='minItemSize'>Minimum item size: </label>
                         <input type='number' name='minItemSize' max={1} step={0.01} onChange={(e => this.setState({minItemSize : Number(e.target.value) }))} value={this.state["minItemSize"]} /><br />

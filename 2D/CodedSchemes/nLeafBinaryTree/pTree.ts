@@ -4,7 +4,10 @@ export enum dirs {
     h = 1,
     v
 }
-
+interface Offsets{
+    xOffset:number;
+    yOffset:number;
+}
 /**object that will act as the node of the pTree. 
  * Value will store h or v as 0 or 1, respectively.
  */
@@ -156,31 +159,30 @@ export class pTree {
      * have changed because of an update
      */
     updateExtrema(): void {
-        this.extrema.top = this.rootNode.rect.height;
+        this.extrema.top = 0;
         this.extrema.bottom = 0;
         this.extrema.left = 0;
-        this.extrema.right = this.rootNode.rect.width;
+        this.extrema.right = 0;
 
-        //go down the right
-        this.updateExtremaHelper(this.rootNode.right);
-
-        //go down the left
-        this.updateExtremaHelper(this.rootNode.left);
+        this.findBoundsOfSubTree(this.rootNode,this.extrema);
 
     }
     updateExtremaHelper(node: node): void {
+        this.findBoundsOfSubTree(node,this.extrema);
+    }
+    findBoundsOfSubTree(node:node,ext:extremaPoints){
         if (node !== null) {
             if (node.isLeaf()) {
-                this.extrema.bottom = Math.min(this.extrema.bottom, node.rect.yPos);
-                this.extrema.top = Math.max(this.extrema.top, node.rect.yPos + node.rect.height);
-                this.extrema.left = Math.min(this.extrema.left, node.rect.xPos);
-                this.extrema.right = Math.max(this.extrema.right, node.rect.xPos + node.rect.width);
+                ext.bottom = Math.min(ext.bottom, node.rect.yPos);
+                ext.top = Math.max(ext.top, node.rect.yPos + node.rect.height);
+                ext.left = Math.min(ext.left, node.rect.xPos);
+                ext.right = Math.max(ext.right, node.rect.xPos + node.rect.width);
             } else {
                 //go down the right
-                this.updateExtremaHelper(node.right);
+                this.findBoundsOfSubTree(node.right,ext);
 
                 //go down the left
-                this.updateExtremaHelper(node.left);
+                this.findBoundsOfSubTree(node.left,ext);
             }
         }
     }
@@ -213,5 +215,46 @@ export class pTree {
         }
         //fall through to null
         return null;
+    }
+
+    /**Takes a pTree and updates all of the coordinates of the rectangles to be correct */
+    fixCoordinates(){
+        this.fixCoordinatesHelper(this.rootNode,{xOffset:0,yOffset:0});
+
+    }
+
+    fixCoordinatesHelper(workingNode:node,offsets:Offsets):Offsets{
+        if (workingNode.isLeaf()){
+            workingNode.rect.xPos = offsets.xOffset;
+            workingNode.rect.yPos = offsets.yOffset;
+            return {xOffset: offsets.xOffset+workingNode.rect.width,yOffset: offsets.yOffset+workingNode.rect.height};
+        } else{ 
+            let offsetLeft = this.fixCoordinatesHelper(workingNode.left,offsets);
+
+            let offsetRight:Offsets;
+            if (workingNode.value=dirs.v){
+                offsetRight = this.fixCoordinatesHelper(workingNode.right,{xOffset:offsets.xOffset,yOffset:offsetLeft.yOffset})
+            } else {
+                //horizontal split
+                offsetRight = this.fixCoordinatesHelper(workingNode.right,{xOffset:offsetLeft.xOffset,yOffset:offsets.yOffset})
+            }
+
+            return {xOffset:Math.max(offsets.xOffset,offsetLeft.xOffset,offsetRight.xOffset),yOffset:Math.max(offsets.yOffset,offsetLeft.yOffset,offsetRight.yOffset)}
+        }
+    }
+    propogateCoordinateShiftDown(workingNode:node,xShift:number,yShift:number){
+        if (workingNode.isLeaf()){
+            console.log("shift")
+            console.log(xShift)
+            console.log(yShift)
+            console.log(workingNode.rect)
+            workingNode.rect.xPos +=xShift;
+            workingNode.rect.yPos +=yShift;
+            console.log(workingNode.rect)
+        } else {
+            //recurse
+            this.propogateCoordinateShiftDown(workingNode.left,xShift,yShift);
+            this.propogateCoordinateShiftDown(workingNode.right,xShift,yShift);
+        }
     }
 }

@@ -31,7 +31,6 @@ describe('2D', function () {
                 alg.placeAllRects();
                 assert.deepEqual(alg.currBestPTree.extrema,{ left: 0, right: 0.1, top: 0.5, bottom: -0.1 });
             });
-            /*
             it('Should add one rectangle to the tree', function () {
                 let rectToPlace= new Rectangle(0.1,0.5);
                 let rectToPlace2= new Rectangle(0.1,0.1);
@@ -74,7 +73,27 @@ describe('2D', function () {
                 let clonedTree = alg.currBestPTree.clone();
                 let foundNode = clonedTree.findEquivalentNode(alg.currBestPTree.rootNode.right);
                 assert.deepEqual(alg.currBestPTree.rootNode.right,foundNode);
-            });*/
+            });
+            it('Add 3 rectangles.', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let rectToPlace3= new Rectangle(0.1,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2,rectToPlace3],0);
+                alg.placeAllRects();
+                console.log(alg.currBestPTree.rootNode.left)
+                console.log(alg.currBestPTree.rootNode.right)
+                console.log(alg.currBestPTree.extrema)
+            });
+            it('Add 3 other rectangles.', function () {
+                let rectToPlace= new Rectangle(0.1,0.5);
+                let rectToPlace2= new Rectangle(0.1,0.1);
+                let rectToPlace3= new Rectangle(0.5,0.1);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2,rectToPlace3],0);
+                alg.placeAllRects();
+                console.log(alg.currBestPTree.rootNode.left)
+                console.log(alg.currBestPTree.rootNode.right)
+                console.log(alg.currBestPTree.extrema)
+            });
         });
         
     });
