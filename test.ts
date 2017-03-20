@@ -88,7 +88,7 @@ describe('2D', function () {
                 let rectToPlace= new Rectangle(0.1,0.5);
                 let rectToPlace2= new Rectangle(0.1,0.1);
                 let rectToPlace3= new Rectangle(0.5,0.1);
-                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace2,rectToPlace3],0);
+                let alg = new NLBT(new RectangleBin(1,1),[rectToPlace,rectToPlace3,rectToPlace2],0);
                 alg.placeAllRects();
                 console.log(alg.currBestPTree.rootNode.left)
                 console.log(alg.currBestPTree.rootNode.right)

@@ -24,4 +24,14 @@ export class Rectangle {
         str+="h: "+this.height.toString();
         return str;
     }
+    draw(ctx:CanvasRenderingContext2D){
+        ctx.save();
+        ctx.scale(100,100);
+        ctx.fillStyle = '#AABBCC';//set the color
+        ctx.lineWidth =1/100;
+        ctx.fillRect(this.xPos,this.yPos,this.width,this.height);
+        ctx.strokeRect(this.xPos,this.yPos,this.width,this.height);
+        ctx.restore();
+    }
+
 }

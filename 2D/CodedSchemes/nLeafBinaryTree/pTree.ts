@@ -2,7 +2,7 @@ import { Rectangle } from "../../Rectangle";
 
 export enum dirs {
     h = 1,
-    v
+    v = 2
 }
 interface Offsets{
     xOffset:number;
@@ -232,7 +232,7 @@ export class pTree {
             let offsetLeft = this.fixCoordinatesHelper(workingNode.left,offsets);
 
             let offsetRight:Offsets;
-            if (workingNode.value=dirs.v){
+            if (workingNode.value===dirs.v){
                 offsetRight = this.fixCoordinatesHelper(workingNode.right,{xOffset:offsets.xOffset,yOffset:offsetLeft.yOffset})
             } else {
                 //horizontal split
@@ -255,6 +255,21 @@ export class pTree {
             //recurse
             this.propogateCoordinateShiftDown(workingNode.left,xShift,yShift);
             this.propogateCoordinateShiftDown(workingNode.right,xShift,yShift);
+        }
+    }
+
+    draw(ctx:CanvasRenderingContext2D){
+        this.drawHelper(this.rootNode,ctx);
+    }
+
+    drawHelper(workingNode:node,ctx:CanvasRenderingContext2D){
+        if (workingNode !== null){
+            if (workingNode.isLeaf()){
+                workingNode.rect.draw(ctx);
+            } else {
+                this.drawHelper(workingNode.left,ctx);
+                this.drawHelper(workingNode.right,ctx);
+            }
         }
     }
 }
