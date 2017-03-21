@@ -272,4 +272,44 @@ export class pTree {
             }
         }
     }
+
+    printDOTFile(){
+        let DOTFile = "digraph{\n";
+        DOTFile+= this.printDOTFileHelper(this.rootNode);
+        DOTFile+="}";
+        console.log(DOTFile);
+    }
+
+    printDOTFileHelper(workingNode:node){
+        let workingString = "";
+        let shape = "";
+        if (workingNode !== undefined){
+            let label = "";
+            shape="box";
+            if (workingNode.isLeaf()){
+                label = workingNode.rect.toString();
+            } else {
+                shape="circle";
+                if (workingNode.value == dirs.h){
+                    label = "horiz";
+                } else {
+                    label = "vert";
+                }
+            }
+
+
+            workingString= workingString + workingNode.uid.toString() + ' [shape="'+shape+'",label="'+label+'"];\n';
+
+            if (workingNode.left !== null){
+                workingString= workingString+workingNode.uid.toString()+"->"+workingNode.left.uid.toString()+";\n";
+                workingString+=this.printDOTFileHelper(workingNode.left);
+            }
+            if (workingNode.right !== null){
+                workingString= workingString+workingNode.uid.toString()+"->"+workingNode.right.uid.toString()+";\n";
+                workingString+=this.printDOTFileHelper(workingNode.right);
+            }
+
+        }
+        return workingString;
+    }
 }
