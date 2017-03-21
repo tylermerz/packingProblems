@@ -9,9 +9,10 @@ export abstract class TwoDPackingAlg {
         this.rects = items;
     }
     placeAllRects():void{
-        this.rects.forEach(rect=>{
-            this.placeRect(rect);
-        });
+        while (this.rects.length > 0){
+            this.placeRect(this.rects.pop());
+        }
+
     }
     placeRect(rect:Rectangle):void{
 
