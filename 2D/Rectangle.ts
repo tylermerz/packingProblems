@@ -1,3 +1,5 @@
+import {RectangleBin} from "./RectangleBin";
+
 export class Rectangle {
     width:number;
     height:number;
@@ -18,20 +20,21 @@ export class Rectangle {
 
     toString():string{
         let str = "";
-        str+="x: "+this.xPos.toString()+", ";
-        str+="y: "+this.yPos.toString()+", ";
-        str+="w: "+this.width.toString()+", ";
-        str+="h: "+this.height.toString();
+        str+="x: "+this.xPos.toFixed(2)+", ";
+        str+="y: "+this.yPos.toFixed(2)+", ";
+        str+="w: "+this.width.toFixed(2)+", ";
+        str+="h: "+this.height.toFixed(2);
         return str;
     }
     draw(ctx:CanvasRenderingContext2D){
-        ctx.save();
-        ctx.scale(100,100);
-        ctx.fillStyle = '#AABBCC';//set the color
-        ctx.lineWidth =1/100;
         ctx.fillRect(this.xPos,this.yPos,this.width,this.height);
         ctx.strokeRect(this.xPos,this.yPos,this.width,this.height);
-        ctx.restore();
     }
-
+    fits(bin:RectangleBin){
+        if (this.xPos < 0 || this.yPos < 0 || this.xPos+this.width >bin.width || this.yPos +this.height>bin.height){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

@@ -26,7 +26,7 @@ export class TwoDVisualizationBackend {
             }
         }
 
-        this.alg = new NLBT(new RectangleBin(1,1),this.itemsToPack,this.recurDepth,this.packedBinCTX);
+        this.alg = new NLBT(new RectangleBin(10,10),this.itemsToPack,this.recurDepth,this.packedBinCTX);
     }
     drawItemsToBePlaced(){
         this.stagingAreaCTX.clearRect(0,0,this.stagingAreaCTX.canvas.clientWidth,this.stagingAreaCTX.canvas.clientHeight);
@@ -50,7 +50,7 @@ export class TwoDVisualizationBackend {
     }
     drawPackedBin(){
         this.packedBinCTX.clearRect(0,0,this.packedBinCTX.canvas.clientWidth,this.packedBinCTX.canvas.clientHeight);
-        this.alg.currBestPTree.draw(this.packedBinCTX);
+        this.alg.draw(this.packedBinCTX);
 
     }
 

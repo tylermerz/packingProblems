@@ -23,8 +23,13 @@ export class NLBT extends TwoDPackingAlg {
             //set the rectangle to be at the origin
             rect.xPos = 0;
             rect.yPos = 0;
-            this.currBestPTree.rootNode.rect = rect;
-            this.currBestPTree.updateExtrema();
+            if (rect.fits(this.binSpec)){
+                this.currBestPTree.rootNode.rect = rect;
+                this.currBestPTree.updateExtrema();
+            } else {
+                throw new Error("First item doesn't fit in the bin.")
+            }
+            
         } else {
             //recursively place rect at all possible spots
             let firstLevelPTree: Array<pTree> = [];
@@ -44,7 +49,7 @@ export class NLBT extends TwoDPackingAlg {
                     pTArray.forEach((pT, treeIndex) => {
                         let rectToPlace = this.rects[itemIndex];
                         var workingPTreeArrays: Array<pTree> = [];
-                        this.generateSingleLevelOfRecurrsion(pT, pT.rootNode, rectToPlace, workingPTreeArrays)
+                        this.generateSingleLevelOfRecurrsion(pT, pT.rootNode, rectToPlace, workingPTreeArrays);
                         nextLevelPTree[arrayIndex] = nextLevelPTree[arrayIndex].concat(workingPTreeArrays);
                     });
                     nextLevelPTree[arrayIndex].sort((a: pTree, b: pTree) => {
@@ -55,8 +60,8 @@ export class NLBT extends TwoDPackingAlg {
                 itemIndex++;
                 lookAheadLevel++;
             }
-
-            let bestScore = currentLevelPTree[0][0].calculateScore();
+            let bestScoreSentinel =this.binSpec.height*this.binSpec.width*2;//a valid score could never reach this 
+            let bestScore =bestScoreSentinel; 
             let bestScoreIndex = 0;
             currentLevelPTree.forEach((pTreeArray, arrayIndex) => {
                 if (currentLevelPTree[arrayIndex][0].calculateScore() < bestScore) {
@@ -64,6 +69,9 @@ export class NLBT extends TwoDPackingAlg {
                     bestScoreIndex = arrayIndex;
                 }
             });
+            if (firstLevelPTree.length == 0 || bestScore ==bestScoreSentinel){//no solutions fit inside the box
+                throw new Error("Item cannot be fit inside bin.");
+            }
             this.lookAheadSolution = currentLevelPTree[bestScoreIndex][0];
             this.currBestPTree = firstLevelPTree[bestScoreIndex];
         }
@@ -91,7 +99,11 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            nextPTrees.push(currBestPTreeCopy);
+            if (this.binSpec.fits(currBestPTreeCopy)){
+                nextPTrees.push(currBestPTreeCopy);
+            }
+
+
             //make a copy of the currBestPTree
             currBestPTreeCopy = workingPTree.clone();
             workingNodeCopy = currBestPTreeCopy.findEquivalentNode(workingNode);
@@ -108,7 +120,10 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            nextPTrees.push(currBestPTreeCopy);
+
+            if (this.binSpec.fits(currBestPTreeCopy)){
+                nextPTrees.push(currBestPTreeCopy);
+            }
             ///////////////////////////////////////////////////////////////////
             //Horizontal split in the tree
             ///////////////////////////////////////////////////////////////////
@@ -128,7 +143,9 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            nextPTrees.push(currBestPTreeCopy);
+            if (this.binSpec.fits(currBestPTreeCopy)){
+                nextPTrees.push(currBestPTreeCopy);
+            }
             //make a copy of the currBestPTree
             currBestPTreeCopy = workingPTree.clone();
             workingNodeCopy = currBestPTreeCopy.findEquivalentNode(workingNode);
@@ -146,12 +163,23 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            nextPTrees.push(currBestPTreeCopy);
+            if (this.binSpec.fits(currBestPTreeCopy)){
+                nextPTrees.push(currBestPTreeCopy);
+            }
             //call on left branch
             this.generateSingleLevelOfRecurrsion(workingPTree, workingNode.left, rect, nextPTrees);
             //call on right branch
             this.generateSingleLevelOfRecurrsion(workingPTree, workingNode.right, rect, nextPTrees);
         }
+    }
+
+    draw(ctx:CanvasRenderingContext2D){
+        ctx.save()
+        ctx.scale(ctx.canvas.clientWidth/this.binSpec.width,ctx.canvas.clientHeight/this.binSpec.height);
+        ctx.fillStyle = '#AABBCC';//set the color
+        ctx.lineWidth =1/Math.max(ctx.canvas.clientWidth/this.binSpec.width,ctx.canvas.clientHeight/this.binSpec.height);
+        this.currBestPTree.draw(ctx);
+        ctx.restore();
     }
 
 
