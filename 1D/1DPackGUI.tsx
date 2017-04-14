@@ -61,8 +61,8 @@ export class OneDPackGUI extends React.Component<any, any> {
                         <input type='number' disabled name='maxItemSize' onChange={(e => this.setState({maxItemSize : Number(e.target.value) }))} value={this.state["maxItemSize"]} /><br /><br />
                         <label htmlFor='packingEff'>Packing Efficiency: </label>
                         <output name="packingEff"> {this.state["packingEff"].toFixed(2)} </output>
-                        <label htmlFor='timeTaken'>Time Taken (ms): </label>
-                        <output name="timeTaken" > {this.state["timeTaken"].toFixed(2)} </output><br />
+                        <label htmlFor='timeTaken'>Time Taken (ns): </label>
+                        <output name="timeTaken" > {this.state["timeTaken"].toFixed(4)} </output><br />
                         <input type='submit' name='Submit' />
                     </form>
                 </div>

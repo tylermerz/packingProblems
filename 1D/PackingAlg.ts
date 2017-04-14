@@ -1,5 +1,5 @@
 import {Item, Bin} from "./ItemAndBin";
-
+process.hrtime = require('browser-process-hrtime');
 /**
  * Generalized class from which all packing algs. are derived.
  * Has naive timing functions to compute basic performance stats.

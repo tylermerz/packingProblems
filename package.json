@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/tylermerz/packingProblems#readme",
   "dependencies": {
+    "browser-process-hrtime": "^0.1.2",
     "csv": "^1.1.0",
     "es6-promise": "^4.0.5",
     "performance-now": "^2.0.0",
