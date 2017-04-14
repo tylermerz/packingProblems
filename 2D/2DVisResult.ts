@@ -9,10 +9,10 @@ export class TwoDVisualizationBackend {
     stagingAreaCTX:CanvasRenderingContext2D;
     alg:NLBT;
     itemsToPack:Array<Rectangle>;
-    recurDepth:Number;
+    recurDepth:number;
     lookAheadCTX:CanvasRenderingContext2D;
 
-    constructor(itemsToPack:Array<Rectangle>,recurDepth:Number,packedBinCTX:CanvasRenderingContext2D,stagingAreaCTX:CanvasRenderingContext2D,lookAheadCTX:CanvasRenderingContext2D){
+    constructor(itemsToPack:Array<Rectangle>,recurDepth:number,packedBinCTX:CanvasRenderingContext2D,stagingAreaCTX:CanvasRenderingContext2D,lookAheadCTX:CanvasRenderingContext2D){
         this.itemsToPack = itemsToPack;
         this.packedBinCTX = packedBinCTX;
         this.stagingAreaCTX = stagingAreaCTX;

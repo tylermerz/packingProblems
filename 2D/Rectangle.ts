@@ -30,7 +30,7 @@ export class Rectangle {
         ctx.fillRect(this.xPos,this.yPos,this.width,this.height);
         ctx.strokeRect(this.xPos,this.yPos,this.width,this.height);
     }
-    fits(bin:RectangleBin){
+    fits(bin:RectangleBin):boolean{
         if (this.xPos < 0 || this.yPos < 0 || this.xPos+this.width >bin.width || this.yPos +this.height>bin.height){
             return false;
         } else {

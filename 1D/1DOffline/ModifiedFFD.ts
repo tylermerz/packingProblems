@@ -9,7 +9,7 @@ import { PackingAlgOffline } from "../PackingAlgOffline";
 */
 export class ModifiedFFD extends PackingAlgOffline {
     lastKeyBin:number;
-
+    openBins:Array<Bin>;
 
     /**repack open bins using the First fit decreasing alg. */
     FFDOpenBins() {

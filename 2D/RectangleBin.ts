@@ -55,7 +55,7 @@ export class RectangleBin extends Rectangle{
 
         return true;
     }
-    fits(pTree:pTree):boolean{
+    treeFits(pTree:pTree):boolean{
         if (pTree.extrema.bottom < 0 ||pTree.extrema.top > this.height || pTree.extrema.left < 0 || pTree.extrema.right > this.width){
             return false;
         } else {

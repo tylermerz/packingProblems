@@ -99,7 +99,7 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            if (this.binSpec.fits(currBestPTreeCopy)){
+            if (this.binSpec.treeFits(currBestPTreeCopy)){
                 nextPTrees.push(currBestPTreeCopy);
             }
 
@@ -121,7 +121,7 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
 
-            if (this.binSpec.fits(currBestPTreeCopy)){
+            if (this.binSpec.treeFits(currBestPTreeCopy)){
                 nextPTrees.push(currBestPTreeCopy);
             }
             ///////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            if (this.binSpec.fits(currBestPTreeCopy)){
+            if (this.binSpec.treeFits(currBestPTreeCopy)){
                 nextPTrees.push(currBestPTreeCopy);
             }
             //make a copy of the currBestPTree
@@ -163,7 +163,7 @@ export class NLBT extends TwoDPackingAlg {
             currBestPTreeCopy.fixCoordinates();
             currBestPTreeCopy.updateExtrema();
             //add it to the list of trees to score at the end
-            if (this.binSpec.fits(currBestPTreeCopy)){
+            if (this.binSpec.treeFits(currBestPTreeCopy)){
                 nextPTrees.push(currBestPTreeCopy);
             }
             //call on left branch

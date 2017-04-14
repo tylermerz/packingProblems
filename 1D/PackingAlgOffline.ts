@@ -7,7 +7,6 @@ import {PackingAlg} from "./PackingAlg";
 export class PackingAlgOffline extends PackingAlg {
     bins : Array<Bin>;
     timeTaken:number;
-    TS:Array<number>;
     items:Array<Item>;
 
     constructor(bins: Array<Bin>) {
