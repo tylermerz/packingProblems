@@ -31,7 +31,7 @@ This command will output `NF.json` (next fit algorithm for 1D bin packing) which
 The results of the REP3 and best fit algorithms can be visualized using React and HTML5 canvas in a web browser. To view this open `1D/testing/1DGUI.html` after bundling the `1DPackGUI.tsx` file.
 
 ```bash
-cd 1D/testing
+cd 1D
 webpack --config 1DGUIwebpack.config.js
 ```
 

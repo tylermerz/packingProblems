@@ -27,7 +27,8 @@
     "csv": "^1.1.0",
     "es6-promise": "^4.0.5",
     "performance-now": "^2.0.0",
-    "typings": "^2.1.0"
+    "typings": "^2.1.0",
+    "webpack": "^2.4.1"
   },
   "devDependencies": {
     "babili-webpack-plugin": "0.0.11",
